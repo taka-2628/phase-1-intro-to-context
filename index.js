@@ -11,13 +11,24 @@ function createEmployeeRecord(empArr){
         timeOutEvents: []
     }
 }
+/*
+let arrJuliusCaesar = ["Julius", "Caesar", "General", 1000];
+console.log(createEmployeeRecord(arrJuliusCaesar));
+//=> {firstName: 'Julius', familyName: 'Caesar', title: 'General', payPerHour: 1000, timeInEvents: [], timeOutEvents: []}
+*/
+
 
 // Write a function createEmployeesRecord() that 
-//      takes an Array that contains arrays as an argument (example: employeesArr = [['Jack', 'Daniel', 'Manager', 30], ['John', 'Kelly', 'Associate', 20]])
+//      takes an Array that contains arrays as an argument
 //      iterates over the Array and pass in each element (Array) to createEmployeeRecord as an argument
 function createEmployeeRecords(employeesArr){
     return employeesArr.map(empRecord => createEmployeeRecord(empRecord))
 }
+/*
+let arrJCMA = [["Julius", "Caesar", "General", 1000],["Marcus", "Antonius", "Commander", 100]]
+console.log(createEmployeeRecords(arrJCMA)) 
+*/
+
 
 // Write a function createTimeInEvent() that 
 //      takes an employee record Object (empObj) and date stamp (dateStamp) as arguments
@@ -37,20 +48,21 @@ function createTimeInEvent(empObj, dateStamp){
     empObj['timeInEvents'].push(newTimeInEvent);
     return empObj;
 }
-
 /*
-let empObj = {
-    firstName: "Jack",
-    familyName: "Daniel",
-    title: "Manager",
-    payPerHour: 20,
+let objJuliusCaesar = {
+    firstName: "Julius",
+    familyName: "Caesar",
+    title: "General",
+    payPerHour: 1000,
     timeInEvents: [],
     timeOutEvents: []
-}
+};
+let dateStampIn = "0044-03-15 0900";
+console.log(createTimeInEvent(objJuliusCaesar, dateStampIn));
+//=>
+//{firstName: "Julius", familyName: "Caesar", title: "General", payPerHour: 1000, timeInEvents: [{type: "TimeIn", date: '0044-03-15', hour: 0900}], timeOutEvents: []}
 */
-//let dateStampIn = "2021-09-15 0900"
 
-//createTimeInEvent(empObj, dateStampIn)
 
 // Write a function createTimeInEvent() that 
 //      takes an employee record Object (empObj) and date stamp (dateStamp) as arguments
@@ -70,10 +82,19 @@ function createTimeOutEvent(empObj, dateStamp){
     empObj['timeOutEvents'].push(newTimeOutEvent);
     return empObj;
 }
-
-//let dateStampOut = "2021-09-15 1800"
-
-//createTimeOutEvent(empObj, dateStampOut)
+/*
+let dateStampOut = "0044-03-15 1100"
+console.log(createTimeOutEvent(objJuliusCaesar, dateStampOut))
+//=>
+{
+    firstName: "Julius",
+    familyName: "Caesar",
+    title: "General",
+    payPerHour: 1000,
+    timeInEvents: [{type: "TimeIn", date: '0044-03-15', hour: 0900}],
+    timeOutEvents: [{type: "TimeOut", date: '0044-03-15', hour: 1100}]
+}
+*/
 
 
 // Write a function hoursWorkedOnDate() that
@@ -87,32 +108,41 @@ function hoursWorkedOnDate(empObj, workDate){
     let outTime = outTimeArr.find(element => (element['date'] === workDate))
     return (outTime['hour'] - inTime['hour'])/100;
 }
-
 /*
-objJuliusCaesar = {
+let objJuliusCaesar = {
     firstName: "Julius",
     familyName: "Caesar",
     title: "General",
     payPerHour: 1000,
     timeInEvents: [{type: "TimeIn", date: '0044-03-15', hour: 0900}],
     timeOutEvents: [{type: "TimeOut", date: '0044-03-15', hour: 1100}]
-}
-workDate = '0044-03-15'
-
-console.log(hoursWorkedOnDate(objJuliusCaesar, workDate))
+};
+workDate = '0044-03-15';
+console.log(hoursWorkedOnDate(objJuliusCaesar, workDate));
+//=> 2
 */
+
 
 // Write a function wagesEarnedOnDate() that
 //      takes an employee record Object (empObj) and date (workDate) 
 //          workDate always uses the following format: "YYYY-MM-DD"
 //      calculates the wage the employee earned on the day
 function wagesEarnedOnDate(empObj, workDate){
-    let inTime = empObj['timeInEvents'].find(element => (element['date'] === workDate))
-    let outTime = empObj['timeOutEvents'].find(element => (element['date'] === workDate))
-    let timeWorked = (outTime['hour'] - inTime['hour'])/100
-    let payPerHour = empObj['payPerHour']
-    return timeWorked * payPerHour;
+    return hoursWorkedOnDate(empObj, workDate) * empObj['payPerHour']
 }
+/*
+let objJuliusCaesar = {
+    firstName: "Julius",
+    familyName: "Caesar",
+    title: "General",
+    payPerHour: 1000,
+    timeInEvents: [{type: "TimeIn", date: '0044-03-15', hour: 0900}],
+    timeOutEvents: [{type: "TimeOut", date: '0044-03-15', hour: 1100}]
+};
+workDate = '0044-03-15';
+console.log(wagesEarnedOnDate(objJuliusCaesar, workDate));
+//=> 2000
+*/
 
 
 // Write a function allWagesFor() that
@@ -132,7 +162,6 @@ function allWagesFor(empObj){
     //console.log(sum) => 378
     return sum;
 }
-
 /*
 objJuliusCaesar = {
     firstName: "Julius",
@@ -142,8 +171,8 @@ objJuliusCaesar = {
     timeInEvents: [{type: "TimeIn", date: '0044-03-14', hour: 0900}, {type: "TimeIn", date: '0044-03-15', hour: 0900} ],
     timeOutEvents: [{type: "TimeOut", date: '0044-03-14', hour: 2100}, {type: "TimeIn", date: '0044-03-15', hour: 1100}]
 }
-
-allWagesFor(objJuliusCaesar);
+console.log(allWagesFor(objJuliusCaesar));
+//=> 378
 */
 
 
@@ -161,7 +190,6 @@ function calculatePayroll(employees){
     return sum;
 }
 
-/*
 let employees = [
         {
             firstName: 'Rafiki', 
@@ -181,5 +209,5 @@ let employees = [
         }
     ]
 
-calculatePayroll(employees);
-*/
+console.log(calculatePayroll(employees));
+
